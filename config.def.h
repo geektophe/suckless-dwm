@@ -44,6 +44,8 @@ static const int attachdirection = 0;    /* 0 default, 1 above, 2 aside, 3 below
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
 #include "fibonacci.c"
+#include "horizgrid.c"
+
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",      tile },    /* first entry is default */
@@ -53,6 +55,7 @@ static const Layout layouts[] = {
 	{ ">M>",      centeredfloatingmaster },
  	{ "[@]",      spiral },
  	{ "[\\]",     dwindle },
+	{ "###",      horizgrid },
 	{ NULL,       NULL },
 };
 
