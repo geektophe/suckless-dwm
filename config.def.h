@@ -32,16 +32,16 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	// { "Gimp",     NULL,       NULL,       0,            1,           -1 },
+	// { "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
 };
 
 /* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
-static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
-static const int attachdirection = 0;    /* 0 default, 1 above, 2 aside, 3 below, 4 bottom, 5 top */
-static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
+static const float mfact         = 0.55; /* factor of master area size [0.05..0.95] */
+static const int nmaster         = 1;    /* number of clients in master area */
+static const int resizehints     = 1;    /* 1 means respect size hints in tiled resizals */
+static const int attachdirection = 3;    /* 0 default, 1 above, 2 aside, 3 below, 4 bottom, 5 top */
+static const int lockfullscreen  = 1;    /* 1 will force focus on the fullscreen window */
 
 #include "fibonacci.c"
 #include "horizgrid.c"
@@ -61,36 +61,64 @@ static const Layout layouts[] = {
 };
 
 /* key definitions */
-#define MODKEY Mod1Mask
+#define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
-	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
+	{ MODKEY|ShiftMask,             KEY,      toggleview,     {.ui = 1 << TAG} }, \
+	{ MODKEY|Mod1Mask,              KEY,      tag,            {.ui = 1 << TAG} }, \
+	{ MODKEY|ControlMask,           KEY,      toggletag,      {.ui = 1 << TAG} },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static char        dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
+static const char *dmenucmd[]  = {
+	"dmenu_run",
+	"-m", dmenumon,
+	"-fn", dmenufont,
+	"-nb", col_gray1,
+	"-nf", col_gray3,
+	"-sb", col_cyan,
+	"-sf", col_gray4,
+	NULL
+};
 static const char *termcmd[]  = { "st", NULL };
 
 #include "focusurgent.c"
+
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
-	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_Return, zoom,           {0} },
-	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
+	{ MODKEY,                       32,        spawn,          {.v = dmenucmd } },     // L
+	{ MODKEY,                       36,        spawn,          {.v = termcmd } },      // Return
+	{ MODKEY,                       24,        togglebar,      {0} },                  // A
+
+	{ MODKEY,                       44,        focusstack,     {.i = -1 } },           // J
+	{ MODKEY,                       45,        focusstack,     {.i = +1 } },           // K
+
+	{ MODKEY,                       46,        incnmaster,     {.i = +1 } },           // L
+	{ MODKEY|ShiftMask,             46,        setmfact,       {.f = +0.05} },         // L
+
+	{ MODKEY,                       43,        incnmaster,     {.i = -1 } },           // H
+	{ MODKEY|ShiftMask,             43,        setmfact,       {.f = -0.05} },         // H
+
+	{ MODKEY,                       98,        focusstack,     {.i = +1 } },           // Up
+	{ MODKEY,                       104,       focusstack,     {.i = -1 } },           // Down
+
+	{ MODKEY,                       102,       incnmaster,     {.i = +1 } },           // Right
+	{ MODKEY|ShiftMask,             102,       setmfact,       {.f = +0.05} },         // Rihgt
+
+	{ MODKEY,                       100,       incnmaster,     {.i = -1 } },           // Left
+	{ MODKEY|ShiftMask,             100,       setmfact,       {.f = -0.05} },         // Left
+
+	{ MODKEY,                       61,        zoom,           {0} },                  // F
+	{ MODKEY|ShiftMask,             61,        togglefloating, {0} },                  // F
+	{ MODKEY|ControlMask,           61,        togglealwaysontop, {0} },               // F
+
+	{ MODKEY,                       23,        view,           {0} },                  // Tab
+	{ MODKEY,                       58,        killclient,     {0} },                  // Comma
+
+	/*
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
@@ -99,29 +127,30 @@ static Key keys[] = {
 	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[5]} },
 	{ MODKEY|ShiftMask,             XK_r,      setlayout,      {.v = &layouts[6]} },
 	{ MODKEY,                       XK_g,      setlayout,      {.v = &layouts[7]} },
-	{ MODKEY,                       XK_space,  setlayout,      {0} },
-	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	{ MODKEY|ShiftMask,             XK_space,  togglealwaysontop, {0} },
-	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_h,      layoutscroll,   {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_l,      layoutscroll,   {.i = +1 } },
-	TAGKEYS(                        XK_1,                      0)
-	TAGKEYS(                        XK_2,                      1)
-	TAGKEYS(                        XK_3,                      2)
-	TAGKEYS(                        XK_4,                      3)
-	TAGKEYS(                        XK_5,                      4)
-	TAGKEYS(                        XK_6,                      5)
-	TAGKEYS(                        XK_7,                      6)
-	TAGKEYS(                        XK_8,                      7)
-	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-	{ MODKEY|ControlMask,           XK_space,  focusmaster,    {0} },
-	{ MODKEY,                       XK_u,      focusurgent,    {0} },
+	{ MODKEY,                       XK_space,  setlayout,      {0} },                  // Sace
+	*/
+
+	{ MODKEY,                       19,        view,           {.ui = ~0 } },          // 0
+	{ MODKEY|ShiftMask,             19,        tag,            {.ui = ~0 } },          // 0
+	{ MODKEY,                       47,        focusmon,       {.i = +1 } },           // N
+	{ MODKEY|ShiftMask,             47,        focusmon,       {.i = -1 } },           // N
+	{ MODKEY|ControlMask,           46,        tagmon,         {.i = +1 } },
+	{ MODKEY|ControlMask,           43,        tagmon,         {.i = -1 } },
+	{ MODKEY,                       65,        layoutscroll,   {.i = +1 } },           // Space
+	{ MODKEY|ShiftMask,             65,        layoutscroll,   {.i = -1 } },           // Space
+
+	TAGKEYS(                        10,                        0)                      // 1
+	TAGKEYS(                        11,                        1)                      // 2
+	TAGKEYS(                        12,                        2)                      // 3
+	TAGKEYS(                        13,                        3)                      // 4
+	TAGKEYS(                        14,                        4)                      // 5
+	TAGKEYS(                        15,                        5)                      // 6
+	TAGKEYS(                        16,                        6)                      // 7
+	TAGKEYS(                        17,                        7)                      // 8
+	TAGKEYS(                        18,                        8)                      // 9
+	{ MODKEY|ShiftMask,             58,        quit,           {0} },                  // Comma
+	{ MODKEY,                       59,        focusurgent,    {0} },                  // Dot
+	{ MODKEY|ShiftMask,             59,        focusmaster,    {0} },                  // Dos
 };
 
 /* button definitions */
