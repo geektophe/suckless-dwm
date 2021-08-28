@@ -89,8 +89,11 @@ static const char *termcmd[]  = { "st", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       32,        spawn,          {.v = dmenucmd } },     // L
+	{ MODKEY,                       32,        spawn,          {.v = dmenucmd } },     // O
+
 	{ MODKEY,                       36,        spawn,          {.v = termcmd } },      // Return
+	{ MODKEY|ControlMask,           36,        zoom,           {0} },                  // Return
+
 	{ MODKEY,                       24,        togglebar,      {0} },                  // A
 
 	{ MODKEY,                       44,        focusstack,     {.i = -1 } },           // J
@@ -111,12 +114,11 @@ static Key keys[] = {
 	{ MODKEY,                       100,       incnmaster,     {.i = -1 } },           // Left
 	{ MODKEY|ShiftMask,             100,       setmfact,       {.f = -0.05} },         // Left
 
-	{ MODKEY,                       61,        zoom,           {0} },                  // F
+	{ MODKEY,                       61,        fullscreen,     {0} },                  // F
 	{ MODKEY|ShiftMask,             61,        togglefloating, {0} },                  // F
 	{ MODKEY|ControlMask,           61,        togglealwaysontop, {0} },               // F
 
 	{ MODKEY,                       23,        view,           {0} },                  // Tab
-	{ MODKEY,                       58,        killclient,     {0} },                  // Comma
 
 	/*
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
@@ -148,7 +150,10 @@ static Key keys[] = {
 	TAGKEYS(                        16,                        6)                      // 7
 	TAGKEYS(                        17,                        7)                      // 8
 	TAGKEYS(                        18,                        8)                      // 9
+
+	{ MODKEY,                       58,        killclient,     {0} },                  // Comma
 	{ MODKEY|ShiftMask,             58,        quit,           {0} },                  // Comma
+
 	{ MODKEY,                       59,        focusurgent,    {0} },                  // Dot
 	{ MODKEY|ShiftMask,             59,        focusmaster,    {0} },                  // Dos
 };
