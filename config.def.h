@@ -12,20 +12,37 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "monospace:size=10" };
 static const char dmenufont[]       = "monospace:size=10";
-static const char col_gray1[]       = "#222222";
-static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
-static const char *colors[][3]      = {
-	/*                   fg         bg         border   */
-	[SchemeNorm]     = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]      = { col_gray4, col_cyan,  col_cyan  },
-	[SchemeStatus]   = { col_gray3, col_gray1, "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
-	[SchemeTagsSel]  = { col_gray4, col_cyan,  "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
-	[SchemeTagsNorm] = { col_gray3, col_gray1, "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
-	[SchemeInfoSel]  = { col_gray4, col_cyan,  "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
-	[SchemeInfoNorm] = { col_gray3, col_gray1, "#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
+
+static const char tag_norm_fg[]        = "#bbbbbb";
+static const char tag_norm_bg[]        = "#222222";
+static const char tag_sel_fg[]         = "#eeeeee";
+static const char tag_sel_bg[]         = "#005577";
+static const char tag_urg_fg[]         = "#222222";
+static const char tag_urg_bg[]         = "#bbbbbb";
+
+static const char client_norm_border[] = "#444444";
+static const char client_sel_border[]  = "#005577";
+static const char client_urg_border[]  = "#bbbbbb";
+
+static const char info_norm_fg[]       = "#bbbbbb";
+static const char info_norm_bg[]       = "#222222";
+static const char info_sel_fg[]        = "#eeeeee";
+static const char info_sel_bg[]        = "#005577";
+
+static const char status_fg[]          = "#bbbbbb";
+static const char status_bg[]          = "#222222";
+
+static const char *colors[][3]         = {
+	/*                     fg            fg            border   */
+	[SchemeClientNorm] = { "#000000",    "#000000",    client_norm_border },
+	[SchemeClientSel]  = { "#000000",    "#000000",    client_sel_border },
+	[SchemeClientUrg]  = { "#000000",    "#000000",    client_urg_border },
+	[SchemeTagsNorm]   = { tag_norm_fg,  tag_norm_bg,  "#000000" }, // Tagbar left unselected {text,background,not used but cannot be empty}
+	[SchemeTagsSel]    = { tag_sel_fg,   tag_sel_bg,   "#000000" }, // Tagbar left selected {text,background,not used but cannot be empty}
+	[SchemeTagsUrg]    = { tag_urg_fg,   tag_urg_bg,   "#000000" }, // Tagbar left unselected {text,background,not used but cannot be empty}
+	[SchemeStatus]     = { status_fg,    status_bg,    "#000000" }, // Statusbar right {text,background,not used but cannot be empty}
+	[SchemeInfoSel]    = { info_sel_fg,  info_sel_bg,  "#000000" }, // infobar middle  selected {text,background,not used but cannot be empty}
+	[SchemeInfoNorm]   = { info_norm_fg, info_norm_bg, "#000000" }, // infobar middle  unselected {text,background,not used but cannot be empty}
 };
 
 /* tagging */
@@ -82,10 +99,10 @@ static const char *dmenucmd[]  = {
 	"dmenu_run",
 	"-m", dmenumon,
 	"-fn", dmenufont,
-	"-nb", col_gray1,
-	"-nf", col_gray3,
-	"-sb", col_cyan,
-	"-sf", col_gray4,
+	"-nb", tag_norm_bg,
+	"-nf", tag_norm_fg,
+	"-sb", tag_sel_bg,
+	"-sf", tag_sel_fg,
 	NULL
 };
 static const char *termcmd[]  = { "st", NULL };
