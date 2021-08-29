@@ -160,6 +160,7 @@ static Key keys[] = {
 
 	{ MODKEY,                       58,        killclient,     {0} },                  // Comma
 	{ MODKEY|ShiftMask,             58,        quit,           {0} },                  // Comma
+	{ MODKEY|ControlMask,           58,        quit,           {0} },                  // Comma
 
 	{ MODKEY,                       59,        focusurgent,    {0} },                  // Dot
 	{ MODKEY|ShiftMask,             59,        focusmaster,    {0} },                  // Dos
