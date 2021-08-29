@@ -86,6 +86,7 @@ static const char *dmenucmd[]  = {
 static const char *termcmd[]  = { "st", NULL };
 
 #include "focusurgent.c"
+#include "movestack.c"
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -97,7 +98,9 @@ static Key keys[] = {
 	{ MODKEY,                       24,        togglebar,      {0} },                  // A
 
 	{ MODKEY,                       44,        focusstack,     {.i = -1 } },           // J
+	{ MODKEY|ControlMask,           44,        movestack,      {.i = -1 } },           // J
 	{ MODKEY,                       45,        focusstack,     {.i = +1 } },           // K
+	{ MODKEY|ControlMask,           45,        movestack,      {.i = +1 } },           // K
 
 	{ MODKEY,                       46,        incnmaster,     {.i = +1 } },           // L
 	{ MODKEY|ShiftMask,             46,        setmfact,       {.f = +0.05} },         // L
