@@ -2,6 +2,7 @@
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const Gap default_gap        = {.isgap = 1, .realgap = 10, .gappx = 10};
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
@@ -170,6 +171,11 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           43,        tagmon,         {.i = -1 } },
 	{ MODKEY,                       65,        layoutscroll,   {.i = +1 } },           // Space
 	{ MODKEY|ShiftMask,             65,        layoutscroll,   {.i = -1 } },           // Space
+
+	{ MODKEY,                       34,        setgaps,        {.i = +5 } },           // Z
+	{ MODKEY,                       35,        setgaps,        {.i = -5 } },           // W
+	{ MODKEY,                       20,        setgaps,        {.i = GAP_RESET } },    // =
+	{ MODKEY|ShiftMask,             20,        setgaps,        {.i = GAP_TOGGLE} },    // =
 
 	TAGKEYS(                        10,                        0)                      // 1
 	TAGKEYS(                        11,                        1)                      // 2
