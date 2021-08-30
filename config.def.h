@@ -122,10 +122,10 @@ static Key keys[] = {
 
 	{ MODKEY,                       44,        focusstack,     {.i = -1 } },           // J
 	{ MODKEY|ControlMask,           44,        movestack,      {.i = -1 } },           // J
-	{ MODKEY|Mod1Mask,              44,        setcfact,       {.f = +0.25} },         // J
+	{ MODKEY|ShiftMask,             44,        setcfact,       {.f = -0.25} },         // J
 	{ MODKEY,                       45,        focusstack,     {.i = +1 } },           // K
 	{ MODKEY|ControlMask,           45,        movestack,      {.i = +1 } },           // K
-	{ MODKEY|Mod1Mask,              45,        setcfact,       {.f = -0.25} },         // K
+	{ MODKEY|ShiftMask,             45,        setcfact,       {.f = +0.25} },         // K
 
 	{ MODKEY,                       21,        setcfact,       {.f =  0.00} },         // =
 
