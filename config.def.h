@@ -2,6 +2,7 @@
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const Gap default_gap        = {.isgap = 1, .realgap = 10, .gappx = 10};
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
@@ -10,6 +11,8 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
+
+static const int user_bh            = 0;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const char font[]            = "monospace 10";
 static const char dmenufont[]       = "monospace:size=10";
 
@@ -121,10 +124,10 @@ static Key keys[] = {
 
 	{ MODKEY,                       44,        focusstack,     {.i = -1 } },           // J
 	{ MODKEY|ControlMask,           44,        movestack,      {.i = -1 } },           // J
-	{ MODKEY|Mod1Mask,              44,        setcfact,       {.f = +0.25} },         // J
+	{ MODKEY|ShiftMask,             44,        setcfact,       {.f = -0.25} },         // J
 	{ MODKEY,                       45,        focusstack,     {.i = +1 } },           // K
 	{ MODKEY|ControlMask,           45,        movestack,      {.i = +1 } },           // K
-	{ MODKEY|Mod1Mask,              45,        setcfact,       {.f = -0.25} },         // K
+	{ MODKEY|ShiftMask,             45,        setcfact,       {.f = +0.25} },         // K
 
 	{ MODKEY,                       21,        setcfact,       {.f =  0.00} },         // =
 
@@ -169,6 +172,11 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           43,        tagmon,         {.i = -1 } },
 	{ MODKEY,                       65,        layoutscroll,   {.i = +1 } },           // Space
 	{ MODKEY|ShiftMask,             65,        layoutscroll,   {.i = -1 } },           // Space
+
+	{ MODKEY,                       34,        setgaps,        {.i = +5 } },           // Z
+	{ MODKEY,                       35,        setgaps,        {.i = -5 } },           // W
+	{ MODKEY,                       20,        setgaps,        {.i = GAP_RESET } },    // =
+	{ MODKEY|ShiftMask,             20,        setgaps,        {.i = GAP_TOGGLE} },    // =
 
 	TAGKEYS(                        10,                        0)                      // 1
 	TAGKEYS(                        11,                        1)                      // 2
