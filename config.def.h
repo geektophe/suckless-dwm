@@ -126,15 +126,17 @@ static const char *dmenucmd[]  = {
 	"-sf", tag_sel_fg,
 	NULL
 };
-static const char *termcmd[]  = { "st", NULL };
-static const char *scrlockcmd[]  = { "pkill", "-USR1", "xidle", NULL };
-static const char *clipmancmd[]  = { "xfce4-clipman-history", NULL };
-static const char *scrshotcmd[]  = { "screenshot", NULL };
+static const char *termcmd[]       = { "st", NULL };
+static const char scratchpadname[] = "scratchpad";
+static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
+static const char *scrlockcmd[]    = { "pkill", "-USR1", "xidle", NULL };
+static const char *clipmancmd[]    = { "xfce4-clipman-history", NULL };
+static const char *scrshotcmd[]    = { "screenshot", NULL };
 
 #ifdef __OpenBSD__
 static const char *voltogglecmd[]  = { "sndioctl", "output.level=!", NULL };
-static const char *volupcmd[]  =     { "sndioctl", "output.level=+0.05", NULL };
-static const char *voldowncmd[]  =   { "sndioctl", "output.level=-0.05", NULL };
+static const char *volupcmd[]      = { "sndioctl", "output.level=+0.05", NULL };
+static const char *voldowncmd[]    = { "sndioctl", "output.level=-0.05", NULL };
 #endif /* __OpenBSD__ */
 
 #include "focusurgent.c"
@@ -209,6 +211,8 @@ static Key keys[] = {
 
 	{ MODKEY,                       59,        focusurgent,    {0} },                  // Dot
 	{ MODKEY|ShiftMask,             59,        focusmaster,    {0} },                  // Dot
+
+	{ MODKEY,                       31,        togglescratch,  {.v = scratchpadcmd } },// I
 
 	{ ControlMask|Mod1Mask,         32,        spawn,          {.v = scrlockcmd} },    // O
 	{ ControlMask|Mod1Mask,         60,        spawn,          {.v = clipmancmd} },    // Slash
