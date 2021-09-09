@@ -128,7 +128,7 @@ static const char *dmenucmd[]  = {
 };
 static const char *termcmd[]       = { "st", NULL };
 static const char scratchpadname[] = "scratchpad";
-static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
+static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "175x45", NULL };
 static const char *scrlockcmd[]    = { "pkill", "-USR1", "xidle", NULL };
 static const char *clipmancmd[]    = { "xfce4-clipman-history", NULL };
 static const char *scrshotcmd[]    = { "screenshot", NULL };
@@ -207,7 +207,7 @@ static Key keys[] = {
 
 	{ MODKEY,                       58,        killclient,     {0} },                  // Comma
 	{ MODKEY|ShiftMask,             58,        quit,           {0} },                  // Comma
-	{ MODKEY|ControlMask,           58,        quit,           {0} },                  // Comma
+	{ MODKEY|ControlMask,           58,        quit,           {1} },                  // Comma
 
 	{ MODKEY,                       59,        focusurgent,    {0} },                  // Dot
 	{ MODKEY|ShiftMask,             59,        focusmaster,    {0} },                  // Dot
